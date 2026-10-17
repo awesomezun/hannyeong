@@ -44,7 +44,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task { @MainActor in
             do {
                 try await Task.sleep(for: .seconds(1))
-                model.sourceID = "com.yeop.inputmethod.JevType"
+                model.sourceID = "com.yeop.inputmethod.Hannyeong"
                 model.expectedText = "안녕 slack chatgpt gpt\n지금 slack에서 작업 중ㅋㅋ\ngptㅋㅋㅋㅋ"
                 if let casesFile {
                     model.expectedText = try String(contentsOfFile: casesFile, encoding: .utf8)

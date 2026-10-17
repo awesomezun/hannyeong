@@ -3,11 +3,11 @@
 - release 빌드 및 Developer ID 서명 검증 통과.
 - XCTest 4건 통과: 두벌식 분해·Shift 키 매핑, 한글 정규화, 지원하지 않는 문자, 원문/결과 차이 표시.
 - 상단 텍스트 편집기에 Command-V를 이용한 여러 줄 붙여넣기 확인.
-- 초기 활성 창 검사에서 실제 JevType 입력 결과 `안녕 slack chatgpt gpt`, `지금 slack에서 작업 중ㅋㅋ`, `gptㅋㅋㅋㅋ`가 원문과 일치함을 확인.
+- 초기 활성 창 검사에서 실제 Hannyeong 입력 결과 `안녕 slack chatgpt gpt`, `지금 slack에서 작업 중ㅋㅋ`, `gptㅋㅋㅋㅋ`가 원문과 일치함을 확인.
 - 자동화의 버튼 클릭이 창을 활성화하지 못하는 현상 관측. 비활성 창에서 CGEventPostToPid는 입력기를 거치지 않고 ASCII 키 그대로 출력함. `background-bypass.json` 6건과 `background-restart.json` 3건은 이 현상의 진단 기록이며, 입력기 정확도 평가에서 제외함.
 - 반복·일시정지·재개·중단·재시작·JSON 인코딩 경로 자체는 내부 실행 검사에서 동작. 버튼의 실제 활성 창 동작은 사용자 직접 확인 필요.
 - 최종 빌드는 활성 앱, 키 윈도, 실제 타이핑 편집기 포커스, 시스템 및 편집기의 입력 소스가 일치할 때만 키를 보냄. 비활성 상태에서는 일시정지하며 자동으로 다른 입력 경로를 사용하지 않음.
 - 중단된 조합이 남은 상태에서 창을 비울 때 NSTextView 범위 예외 관측. `discardMarkedText` 뒤 클라이언트의 `unmarkText`와 선택 범위 정리를 수행하도록 수정.
-- JevType의 모델 및 저장된 교정은 수정하지 않음. 검사 전후 corrections.json SHA-256: `bddfcec0fb184bee44b093f777ca6bc20643bb9169d0249f0650b690fc0cb9f7`.
+- Hannyeong의 모델 및 저장된 교정은 수정하지 않음. 검사 전후 corrections.json SHA-256: `bddfcec0fb184bee44b093f777ca6bc20643bb9169d0249f0650b690fc0cb9f7`.
 
 대기 중: 최종 빌드에서 사용자가 실제 시작 버튼을 눌렀을 때 입력기 처리 확인. 카카오톡·Slack 입력창의 처리와 이 앱의 NSTextView 처리 결과는 동일하다고 가정하지 않음.

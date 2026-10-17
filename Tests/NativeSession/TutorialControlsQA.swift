@@ -1,5 +1,5 @@
 import AppKit
-import JevIMECore
+import HannyeongCore
 
 @main
 private struct TutorialControlsQA {

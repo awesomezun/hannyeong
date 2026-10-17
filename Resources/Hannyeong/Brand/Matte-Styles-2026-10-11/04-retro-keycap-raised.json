@@ -1,0 +1,9 @@
+{
+  "source": "/Users/imsang-yeob/.codex/generated_images/01a10dac-81a3-7913-a680-a255c5319ff9/exec-baf3d604-0e4c-47c5-9367-e6c72c7b45fa.png",
+  "destination": "/Users/imsang-yeob/Documents/Codex/2026-10-06/hannyeong/Resources/Hannyeong/Brand/Matte-Styles-2026-10-11/04-retro-keycap-raised.png",
+  "reference": "/Users/imsang-yeob/Documents/Codex/2026-10-06/hannyeong/Resources/Hannyeong/Brand/Matte-Styles-2026-10-11/04-retro-keycap.png",
+  "generator": "Built-in image_gen",
+  "reviewOnly": true,
+  "requiresUserApprovalBeforeApplication": true,
+  "prompt": "Use case: precise-object-edit.\nEdit the supplied retro-keycap app icon with ONE tiny positional change only.\nMove the entire ivory-white Korean ㅎ glyph UP slightly as one rigid group: approximately 24 pixels on this 1254x1254 image (about 2% of the keycap height). Translate all three parts together by the same amount: the short top bar, the wide second bar, and the lower circular ring. Keep horizontal position exactly the same.\nPreserve EVERYTHING else: the glyph's size, shape, stroke thickness, color, internal ring hole, spacing between its parts, matte printed texture; the charcoal keycap's silhouette, concave face, sidewalls, edge curvature, texture, lighting, shadow, canvas size, framing and transparent outside. The original old glyph position should be naturally restored to matching charcoal face texture without ghosts or duplicates.\nDo not enlarge, shrink, redraw, restyle, recolor or rotate the glyph. Do not change any tile geometry or lighting. Do not add anything. Output the same single icon with transparent background, no captions or labels."
+}

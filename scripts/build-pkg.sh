@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Installer package for 한녕 (JevType) built from the release app (scripts/build-release.sh).
-# Installs into the current user's ~/Library/Input Methods — the same place as manual DMG installs and
+# Installer package for 한녕 (Hannyeong) built from the release app (scripts/build-release.sh).
+# Installs into the current user's ~/Library/Input Methods — the same place as earlier manual installs and
 # the developer build — then registers and selects the input source as the logged-in user.
 #
 #   ./scripts/build-pkg.sh          # unsigned pkg for local testing
@@ -17,10 +17,10 @@ done
 
 TASK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TASK_OUT="$TASK_ROOT/dist/release"
-TASK_APP="$TASK_OUT/JevType.app"
+TASK_APP="$TASK_OUT/Hannyeong.app"
 TASK_STAGE="$TASK_ROOT/.build/release-bundle/pkg"
-TASK_INSTALLER_IDENTITY="${JEVTYPE_INSTALLER_IDENTITY:-Developer ID Installer: Sang Yeop Lim (79Q5RV23F9)}"
-TASK_PROFILE="${JEVTYPE_NOTARY_PROFILE:-FlowClip-Notary}"
+TASK_INSTALLER_IDENTITY="${HANNYEONG_INSTALLER_IDENTITY:-Developer ID Installer: Sang Yeop Lim (79Q5RV23F9)}"
+TASK_PROFILE="${HANNYEONG_NOTARY_PROFILE:-FlowClip-Notary}"
 
 if [[ ! -d "$TASK_APP" ]]; then
     echo "릴리스 앱이 없습니다. 먼저 ./scripts/build-release.sh를 실행하세요: $TASK_APP" >&2
@@ -43,7 +43,7 @@ fi
 
 rm -rf "$TASK_STAGE"
 mkdir -p "$TASK_STAGE/root" "$TASK_STAGE/scripts" "$TASK_STAGE/resources"
-/usr/bin/ditto "$TASK_APP" "$TASK_STAGE/root/JevType.app"
+/usr/bin/ditto "$TASK_APP" "$TASK_STAGE/root/Hannyeong.app"
 
 # Without this, Installer "upgrades" any other copy with the same bundle ID it finds on disk
 # (e.g. a build in dist/) instead of writing to Input Methods.
@@ -53,9 +53,12 @@ mkdir -p "$TASK_STAGE/root" "$TASK_STAGE/scripts" "$TASK_STAGE/resources"
 cat > "$TASK_STAGE/scripts/preinstall" <<'SCRIPT'
 #!/bin/bash
 # Replace the whole bundle so files from an older build never linger. User data in
-# ~/Library/Application Support/JevType is not touched.
+# ~/Library/Application Support/Hannyeong is not touched.
 TARGET="$2"
 [[ -n "$TARGET" ]] || exit 0
+/usr/bin/pkill -x Hannyeong 2>/dev/null || true
+/bin/rm -rf "$TARGET/Hannyeong.app"
+# Versions before 0.2.0 were installed as JevType.app; the new app disables that input source on registration.
 /usr/bin/pkill -x JevType 2>/dev/null || true
 /bin/rm -rf "$TARGET/JevType.app"
 exit 0
@@ -65,8 +68,8 @@ cat > "$TASK_STAGE/scripts/postinstall" <<'SCRIPT'
 #!/bin/bash
 # Register and select 한녕 in the logged-in user's GUI session.
 TARGET="$2"
-APP="$TARGET/JevType.app"
-BINARY="$APP/Contents/MacOS/JevType"
+APP="$TARGET/Hannyeong.app"
+BINARY="$APP/Contents/MacOS/Hannyeong"
 LOG="/tmp/hannyeong-install.log"
 log() { echo "$(date '+%F %T') $*" >> "$LOG"; }
 log "postinstall uid=$(id -u) target=$TARGET"
@@ -93,15 +96,15 @@ SCRIPT
 chmod 755 "$TASK_STAGE/scripts/preinstall" "$TASK_STAGE/scripts/postinstall"
 
 /usr/bin/pkgbuild --root "$TASK_STAGE/root" --component-plist "$TASK_STAGE/components.plist" \
-    --identifier com.yeop.inputmethod.JevType.pkg --version "$TASK_VERSION.$TASK_BUILD" \
+    --identifier com.yeop.inputmethod.Hannyeong.pkg --version "$TASK_VERSION.$TASK_BUILD" \
     --install-location "/Library/Input Methods" --scripts "$TASK_STAGE/scripts" \
-    "$TASK_STAGE/JevType-component.pkg"
+    "$TASK_STAGE/Hannyeong-component.pkg"
 
 cat > "$TASK_STAGE/resources/welcome.html" <<'HTML'
 <html><body style="font-family:-apple-system;font-size:13px">
 <h2>한녕 설치</h2>
-<p>한녕(JevType)을 이 사용자 계정의 <code>~/Library/Input Methods</code>에 설치하고 입력 소스로 등록합니다. 관리자 암호는 필요하지 않습니다.</p>
-<p>모든 한·영 판별은 이 Mac 안에서만 이루어지며 네트워크 요청을 보내지 않습니다. 기존 교정 기록과 개인 학습(<code>~/Library/Application Support/JevType</code>)은 그대로 유지됩니다.</p>
+<p>한녕(Hannyeong)을 이 사용자 계정의 <code>~/Library/Input Methods</code>에 설치하고 입력 소스로 등록합니다. 관리자 암호는 필요하지 않습니다.</p>
+<p>모든 한·영 판별은 이 Mac 안에서만 이루어지며 네트워크 요청을 보내지 않습니다. 기존 교정 기록과 개인 학습(<code>~/Library/Application Support/Hannyeong</code>)은 그대로 유지됩니다.</p>
 <p>요구 사항: Apple Silicon Mac, macOS 15.0 이상 (macOS 27.2에서 검증).</p>
 </body></html>
 HTML
@@ -110,7 +113,7 @@ cat > "$TASK_STAGE/resources/conclusion.html" <<'HTML'
 <h2>설치를 마쳤습니다</h2>
 <p>메뉴바의 입력 메뉴에서 <b>한녕</b>을 선택하세요.</p>
 <p><b>메뉴에 한녕이 보이지 않으면</b> 작업을 저장하고 <b>로그아웃 후 다시 로그인</b>하세요. 최근 macOS는 새 입력 소스를 로그아웃 전까지 목록에 반영하지 않는 경우가 있습니다(Apple에서 확인한 동작). 그래도 없으면 시스템 설정 → 키보드 → 텍스트 입력 → 입력 소스 → 편집 → + → 한국어 → 한녕을 추가하세요.</p>
-<p>Finder에서는 앱이 “한녕”으로 보이지만 실제 파일 이름은 <code>JevType.app</code>입니다.</p>
+<p>Finder에서는 앱이 “한녕”으로 보이지만 실제 파일 이름은 <code>Hannyeong.app</code>입니다.</p>
 </body></html>
 HTML
 cat > "$TASK_STAGE/distribution.xml" <<XML
@@ -122,10 +125,10 @@ cat > "$TASK_STAGE/distribution.xml" <<XML
     <options customize="never" require-scripts="false" hostArchitectures="arm64"/>
     <domains enable_anywhere="false" enable_currentUserHome="true" enable_localSystem="false"/>
     <volume-check><allowed-os-versions><os-version min="15.0"/></allowed-os-versions></volume-check>
-    <choices-outline><line choice="default"><line choice="com.yeop.inputmethod.JevType.pkg"/></line></choices-outline>
+    <choices-outline><line choice="default"><line choice="com.yeop.inputmethod.Hannyeong.pkg"/></line></choices-outline>
     <choice id="default"/>
-    <choice id="com.yeop.inputmethod.JevType.pkg" visible="false"><pkg-ref id="com.yeop.inputmethod.JevType.pkg"/></choice>
-    <pkg-ref id="com.yeop.inputmethod.JevType.pkg" version="$TASK_VERSION.$TASK_BUILD" onConclusion="none">JevType-component.pkg</pkg-ref>
+    <choice id="com.yeop.inputmethod.Hannyeong.pkg" visible="false"><pkg-ref id="com.yeop.inputmethod.Hannyeong.pkg"/></choice>
+    <pkg-ref id="com.yeop.inputmethod.Hannyeong.pkg" version="$TASK_VERSION.$TASK_BUILD" onConclusion="none">Hannyeong-component.pkg</pkg-ref>
 </installer-gui-script>
 XML
 /usr/bin/productbuild --distribution "$TASK_STAGE/distribution.xml" --resources "$TASK_STAGE/resources" \

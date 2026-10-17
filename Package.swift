@@ -2,21 +2,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "JevKoreanIMEExperiment",
+    name: "Hannyeong",
     platforms: [.macOS(.v13)],
     products: [
-        .library(name: "JevIMECore", targets: ["JevIMECore"]),
-        .executable(name: "jev-ime-eval", targets: ["JevIMEEval"]),
-        .executable(name: "JevType", targets: ["JevType"]),
+        .library(name: "HannyeongCore", targets: ["HannyeongCore"]),
+        .executable(name: "hannyeong-eval", targets: ["HannyeongEval"]),
+        .executable(name: "Hannyeong", targets: ["Hannyeong"]),
     ],
     targets: [
         .systemLibrary(name: "CLibHangul", pkgConfig: "libhangul"),
-        .target(name: "JevIMECore", dependencies: ["CLibHangul"]),
-        .executableTarget(name: "JevIMEEval", dependencies: ["JevIMECore"]),
-        .executableTarget(name: "JevType", dependencies: ["JevIMECore"], linkerSettings: [
+        .target(name: "HannyeongCore", dependencies: ["CLibHangul"]),
+        .executableTarget(name: "HannyeongEval", dependencies: ["HannyeongCore"]),
+        .executableTarget(name: "Hannyeong", dependencies: ["HannyeongCore"], linkerSettings: [
             .linkedFramework("AppKit"), .linkedFramework("InputMethodKit"),
             .linkedFramework("Carbon"), .linkedFramework("SwiftUI")
         ]),
-        .testTarget(name: "JevIMECoreTests", dependencies: ["JevIMECore"]),
+        .testTarget(name: "HannyeongCoreTests", dependencies: ["HannyeongCore"]),
     ]
 )

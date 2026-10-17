@@ -91,7 +91,7 @@ extension LabModel {
         guard let editor = editor as? MeasuredTextView else { preconditionFailure("Measured editor missing") }
         precondition(config.durationSeconds > 0 && config.intervalMilliseconds > 0 && !config.cases.isEmpty)
         guard CGPreflightPostEventAccess() else { throw TypingError.permissionRequired }
-        sourceID = "com.yeop.inputmethod.JevType"
+        sourceID = "com.yeop.inputmethod.Hannyeong"
         try selectSource()
         // Switching/restarting an installed input source establishes its IMK connection asynchronously.
         try await Task.sleep(for: .seconds(1))

@@ -10,16 +10,16 @@ mkdir -p "$TASK_QA"
 clang -c Tests/NativeSession/NativeTextView.m -o "$TASK_QA/NativeTextView.o" -Wno-protocol
 swiftc -parse-as-library -swift-version 5 \
     -I "$TASK_PRODUCTS" -I Sources/CLibHangul -I .build/dependencies/libhangul/include \
-    -L "$TASK_PRODUCTS" -lJevIMECore -L .build/dependencies/libhangul/lib -lhangul \
+    -L "$TASK_PRODUCTS" -lHannyeongCore -L .build/dependencies/libhangul/lib -lhangul \
     -framework AppKit -framework InputMethodKit -framework Carbon \
     -import-objc-header Tests/NativeSession/NativeTextView.h \
-    Sources/JevType/AppSupport.swift Sources/JevType/Settings.swift Sources/JevType/Tutorial.swift Sources/JevType/Shortcuts.swift Sources/JevType/CorrectionBrowser.swift \
-    Sources/JevType/TutorialView.swift Sources/JevType/TutorialControls.swift \
-    Sources/JevType/CorrectionStore.swift Sources/JevType/LocalModelService.swift \
-    Sources/JevType/CompositionSession.swift Tests/NativeSession/LocalSessionQA.swift \
+    Sources/Hannyeong/AppSupport.swift Sources/Hannyeong/Settings.swift Sources/Hannyeong/Tutorial.swift Sources/Hannyeong/Shortcuts.swift Sources/Hannyeong/CorrectionBrowser.swift \
+    Sources/Hannyeong/TutorialView.swift Sources/Hannyeong/TutorialControls.swift \
+    Sources/Hannyeong/CorrectionStore.swift Sources/Hannyeong/LocalModelService.swift \
+    Sources/Hannyeong/CompositionSession.swift Tests/NativeSession/LocalSessionQA.swift \
     "$TASK_QA/NativeTextView.o" -o "$TASK_QA/LocalSessionQA"
-TASK_REPORT="${JEVTYPE_SESSION_REPORT_DIRECTORY:-$TASK_ROOT/.build/private-chat-improvement-2026-10-09/applied-surface-2026-10-10}"
-TASK_RUNTIME="${JEVTYPE_LOCAL_RUNTIME:-$TASK_ROOT/.build/b3-runtime/runtime.json}"
+TASK_REPORT="${HANNYEONG_SESSION_REPORT_DIRECTORY:-$TASK_ROOT/.build/private-chat-improvement-2026-10-09/applied-surface-2026-10-10}"
+TASK_RUNTIME="${HANNYEONG_LOCAL_RUNTIME:-$TASK_ROOT/.build/b3-runtime/runtime.json}"
 mkdir -p "$TASK_REPORT"
 chmod 700 "$TASK_REPORT"
 "$TASK_QA/LocalSessionQA" "$TASK_RUNTIME" \

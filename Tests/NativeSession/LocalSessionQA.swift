@@ -1,6 +1,6 @@
 import AppKit
 import InputMethodKit
-import JevIMECore
+import HannyeongCore
 
 @MainActor
 private final class Fixture {
