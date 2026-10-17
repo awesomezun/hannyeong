@@ -1,0 +1,5 @@
+module CLibHangul [system] {
+    header "shim.h"
+    link "hangul"
+    export *
+}

@@ -1,0 +1,40 @@
+{
+  "directory": "/Users/imsang-yeob/Documents/Codex/2026-10-06/https-github-com-yksr-melt-meltype/Resources/JevType/Brand/Matte-Badge-2026-10-11",
+  "generator": "Built-in image_gen",
+  "reviewOnly": true,
+  "requiresUserApprovalBeforeApplication": true,
+  "request": "Reduce shine. Use darker rounded input-source badge containing only ㅎ. Regenerate app icon.",
+  "assets": [
+    {
+      "id": "app",
+      "name": "무광 앱 아이콘",
+      "file": "AppIcon-matte-source.png",
+      "prompt": "Use case: logo-brand.\nCreate a single polished macOS app icon for the Korean automatic Korean/English typing app \"한녕\".\nImage 1 is the user's macOS input-source menu reference. Use only its restrained badge-with-one-letter visual language, not its text labels or the complete Hangul syllable 한.\nImage 2 is a previously generated design the user finds FAR TOO SHINY. Preserve the idea of one recognizable Korean ㅎ centered inside an app tile, but completely replace the glass material and glowing treatment.\nNEW DESIGN: a graphite-charcoal rounded-square macOS tile, matte fine-textured coated ceramic, dark neutral #30343A, no blue glow. A single ivory-white ㅎ in the center, crisp mature Hangul lettering. ㅎ must be the exact consonant: one short horizontal top cap, one longer horizontal bar below, then a circular ring below. NO ㄴ or additional glyphs. Use restrained semibold geometry, generous clean counter. The ㅎ is subtly raised porcelain, almost flat at its top surface with only a shallow bevel and a soft contact shadow showing about 1–2mm depth. The tile itself has gently curved edges and a shallow physical sidewall visible at lower edge. Soft diffuse daylight from upper left, broad low-contrast shading, quiet tactile finish. The icon should feel crafted and slightly dimensional but NOT glossy, reflective, wet, metallic, luminous, glittering, or neon. No specular streaks, glass, rim lighting or bloom. Not a flat vector logo pasted on a square either.\nFront-on nearly orthographic composition, centered square tile with a generous transparent margin outside the tile. ONLY ONE app icon, no menu symbol, no text labels, no numbers, no watermarks, no desktop mockup. Transparent background, clean rounded corners. Serious utility software, never cute, no smile, no face, no mascot.",
+      "refs": [
+        "/var/folders/9d/8jyn_9md5xs0dcw7638m62g40000gn/T/codex-clipboard-82d5459f-6da3-4ca6-8d93-1685148d0bf9.png",
+        "/Users/imsang-yeob/Documents/Codex/2026-10-06/https-github-com-yksr-melt-meltype/Resources/JevType/Brand/Dimensional-Concepts-2026-10-11/01-glass-hieuh.png"
+      ],
+      "sourcePath": "/Users/imsang-yeob/.codex/generated_images/01a10dac-81a3-7913-a680-a255c5319ff9/exec-5fe6a47d-4ee0-4701-974b-28fd329775c6.png",
+      "savedPath": "/Users/imsang-yeob/Documents/Codex/2026-10-06/https-github-com-yksr-melt-meltype/Resources/JevType/Brand/Matte-Badge-2026-10-11/AppIcon-matte-source.png",
+      "width": 1254,
+      "height": 1254,
+      "pngColorType": 6
+    },
+    {
+      "id": "input",
+      "name": "차콜 배지 입력기 아이콘",
+      "file": "InputSource-charcoal-source.png",
+      "prompt": "Use case: logo-brand.\nAsset: ONE tiny macOS input-source badge icon for \"한녕\", designed for a menu bar.\nThe attached image is a REFERENCE ONLY: multiple macOS input-source menu rows, each with a gray rounded rectangular badge containing white 한. Isolate and redesign the BADGE only.\nCreate EXACTLY ONE badge on a transparent canvas. The badge is a dark charcoal #30343A FILLED rounded rectangle, modestly wider than tall (width:height approx 1.3:1), about 25 percent corner radius. Inside, show only the single WHITE Korean consonant \"ㅎ\", centered, bold clean typographic Hangul, with readable generous gaps and counter. ㅎ is NOT 한: one short horizontal cap, one wider horizontal bar beneath, one closed circular ring below those bars. No ㄴ, no syllable block, no A, no H, no smile. The badge must be noticeably darker than the gray reference; the white glyph fully contained inside with balanced margins, about 65 percent of the badge height. Flat solid high-contrast badge appropriate for macOS menu icons, no shadow, no gradient, no glow, no extra border.\nOutput is ONE LARGE clean raster master of this single badge, with wide transparent margin around it. No menu rows, labels, five duplicates, text, illustrations or mockups. The entire outside of the badge must be transparent, preserve opaque white ㅎ within dark badge.",
+      "refs": [
+        "/var/folders/9d/8jyn_9md5xs0dcw7638m62g40000gn/T/codex-clipboard-82d5459f-6da3-4ca6-8d93-1685148d0bf9.png"
+      ],
+      "sourcePath": "/Users/imsang-yeob/.codex/generated_images/01a10dac-81a3-7913-a680-a255c5319ff9/exec-718f3654-a25c-4c12-adc7-46f96656da6d.png",
+      "savedPath": "/Users/imsang-yeob/Documents/Codex/2026-10-06/https-github-com-yksr-melt-meltype/Resources/JevType/Brand/Matte-Badge-2026-10-11/InputSource-charcoal-source.png",
+      "width": 1427,
+      "height": 1102,
+      "pngColorType": 6
+    }
+  ],
+  "installedBuildUnchanged": "28",
+  "installedIconUnchanged": "Hannyeong-v2.icns"
+}

@@ -1,0 +1,32 @@
+{
+  "duration": 26,
+  "assertions": [
+    {
+      "kind": "appearsBy",
+      "selector": "#checkmark",
+      "bySec": 4
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#result",
+      "bySec": 13
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#saved-check",
+      "bySec": 22
+    },
+    {
+      "kind": "staysInFrame",
+      "selector": "#menu-card"
+    },
+    {
+      "kind": "staysInFrame",
+      "selector": ".input-card"
+    },
+    {
+      "kind": "staysInFrame",
+      "selector": "#candidate-card"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "createdAt" : "2026-10-10T15:28:12Z",
+  "intervalMilliseconds" : 35,
+  "keyboard" : "두벌식 \/ ANSI",
+  "results" : [
+    {
+      "actual" : "dkssud slack chatgpt gpt ",
+      "elapsedMilliseconds" : 1440,
+      "expected" : "안녕 slack chatgpt gpt",
+      "id" : "535CFDE4-3D5D-4D98-9026-E1EB396554A6",
+      "inputSourceID" : "com.yeop.inputmethod.JevType",
+      "inputSourceName" : "JevType",
+      "iteration" : 1,
+      "keyCount" : 25,
+      "passed" : false,
+      "sentenceNumber" : 1
+    },
+    {
+      "actual" : "wlrma slackdptj wkrdjq wndzz ",
+      "elapsedMilliseconds" : 1380,
+      "expected" : "지금 slack에서 작업 중ㅋㅋ",
+      "id" : "88BB3518-4C33-4BDC-BBA2-595373496AC1",
+      "inputSourceID" : "com.yeop.inputmethod.JevType",
+      "inputSourceName" : "JevType",
+      "iteration" : 1,
+      "keyCount" : 29,
+      "passed" : false,
+      "sentenceNumber" : 2
+    },
+    {
+      "actual" : "gptzzzz ",
+      "elapsedMilliseconds" : 417,
+      "expected" : "gptㅋㅋㅋㅋ",
+      "id" : "89F44F19-B2AD-4869-A37A-1FB1CC038F78",
+      "inputSourceID" : "com.yeop.inputmethod.JevType",
+      "inputSourceName" : "JevType",
+      "iteration" : 1,
+      "keyCount" : 8,
+      "passed" : false,
+      "sentenceNumber" : 3
+    },
+    {
+      "actual" : "dkssud slack chatgpt gpt ",
+      "elapsedMilliseconds" : 1228,
+      "expected" : "안녕 slack chatgpt gpt",
+      "id" : "AC2AB4CB-7E28-49E6-AA5A-CEF1764E2457",
+      "inputSourceID" : "com.yeop.inputmethod.JevType",
+      "inputSourceName" : "JevType",
+      "iteration" : 2,
+      "keyCount" : 25,
+      "passed" : false,
+      "sentenceNumber" : 1
+    },
+    {
+      "actual" : "wlrma slackdptj wkrdjq wndzz ",
+      "elapsedMilliseconds" : 1369,
+      "expected" : "지금 slack에서 작업 중ㅋㅋ",
+      "id" : "B5D1E522-3148-4D13-80E1-714720E6A7F5",
+      "inputSourceID" : "com.yeop.inputmethod.JevType",
+      "inputSourceName" : "JevType",
+      "iteration" : 2,
+      "keyCount" : 29,
+      "passed" : false,
+      "sentenceNumber" : 2
+    },
+    {
+      "actual" : "gptzzzz ",
+      "elapsedMilliseconds" : 415,
+      "expected" : "gptㅋㅋㅋㅋ",
+      "id" : "89D9B6EC-27BC-42BE-A915-2E987C454BA1",
+      "inputSourceID" : "com.yeop.inputmethod.JevType",
+      "inputSourceName" : "JevType",
+      "iteration" : 2,
+      "keyCount" : 8,
+      "passed" : false,
+      "sentenceNumber" : 3
+    }
+  ],
+  "route" : "CGEventPostToPid to this app"
+}
