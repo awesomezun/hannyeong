@@ -2,7 +2,7 @@ import AppKit
 
 let sources = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
 let output = URL(fileURLWithPath: CommandLine.arguments[2], isDirectory: true)
-let iconset = output.appendingPathComponent("Hannyeong-v4.iconset", isDirectory: true)
+let iconset = output.appendingPathComponent("Hannyeong-v5.iconset", isDirectory: true)
 try FileManager.default.createDirectory(at: iconset, withIntermediateDirectories: true)
 
 enum IconError: Error {
@@ -40,7 +40,7 @@ func savePNG(_ rep: NSBitmapImageRep, _ url: URL) throws {
     try rep.representation(using: .png, properties: [:])!.write(to: url)
 }
 
-let app = try load("AppIcon-v4-source.png")
+let app = try load("AppIcon-v5-source.png")
 // Menu bar / input-switch icon: the ㅎ and ㄴ characters' faces, pre-rendered pixel-exact at 1x and 2x
 // (black ink + alpha; eyes and the gap between the two characters are transparent so the template tints cleanly).
 func loadRep(_ name: String) throws -> NSBitmapImageRep {
