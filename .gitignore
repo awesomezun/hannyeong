@@ -1,0 +1,32 @@
+# Build output and local environments
+.build/
+dist/
+**/dist/
+.venv*/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Research output and logs: large, and may contain private typing or conversation text
+reports/
+logs/
+evaluation/
+TypingLab/probe-*.json
+
+# Personal typing samples used by local tests
+Tests/NativeSession/user-*.json
+
+# Local tool settings
+.codex/
+
+# Model side stays local: development notes, training, data, experiments, the model runtime,
+# conversion and model build scripts, and their tests. Only the app's own scripts are public.
+docs/
+script/
+Tests/*.py
+scripts/*
+!scripts/generate-brand-icons.swift
+!scripts/prepare-dependencies.sh
+!scripts/build-pkg.sh
+!scripts/run.sh
+!scripts/test-local-session.sh
