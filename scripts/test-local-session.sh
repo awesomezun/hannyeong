@@ -13,10 +13,7 @@ swiftc -parse-as-library -swift-version 5 \
     -L "$TASK_PRODUCTS" -lHannyeongCore -L .build/dependencies/libhangul/lib -lhangul \
     -framework AppKit -framework InputMethodKit -framework Carbon \
     -import-objc-header Tests/NativeSession/NativeTextView.h \
-    Sources/Hannyeong/AppSupport.swift Sources/Hannyeong/Settings.swift Sources/Hannyeong/Tutorial.swift Sources/Hannyeong/Shortcuts.swift Sources/Hannyeong/CorrectionBrowser.swift \
-    Sources/Hannyeong/TutorialView.swift Sources/Hannyeong/TutorialControls.swift \
-    Sources/Hannyeong/CorrectionStore.swift Sources/Hannyeong/LocalModelService.swift \
-    Sources/Hannyeong/CompositionSession.swift Tests/NativeSession/LocalSessionQA.swift \
+    $(ls Sources/Hannyeong/*.swift | grep -v /Application.swift) Tests/NativeSession/LocalSessionQA.swift \
     "$TASK_QA/NativeTextView.o" -o "$TASK_QA/LocalSessionQA"
 TASK_REPORT="${HANNYEONG_SESSION_REPORT_DIRECTORY:-$TASK_ROOT/.build/private-chat-improvement-2026-10-09/applied-surface-2026-10-10}"
 TASK_RUNTIME="${HANNYEONG_LOCAL_RUNTIME:-$TASK_ROOT/.build/b3-runtime/runtime.json}"
