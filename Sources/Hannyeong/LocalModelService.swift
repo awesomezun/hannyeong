@@ -1,9 +1,12 @@
 import Foundation
 import HannyeongCore
+import os
 
 @MainActor
 enum LocalModelService {
     private static var cached: LocalDecisionClient?
+    private static var cachedPersonal: PersonalStateSelection?
+    private static let logger = Logger(subsystem: "com.yeop.inputmethod.Hannyeong", category: "LocalModel")
 
     static func client() throws -> LocalDecisionClient {
         if let cached { return cached }
@@ -17,10 +20,35 @@ enum LocalModelService {
         let runtime = LocalRuntimeConfiguration(python: python,
             worker: resources.appendingPathComponent(saved.worker).path,
             model: resources.appendingPathComponent(saved.model).path)
-        let personal = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Application Support/Hannyeong/local-b3-session-personal.json")
-        let client = LocalDecisionClient(runtime: runtime, personalURL: personal)
+        let personal = try selectPersonalState(model: URL(fileURLWithPath: runtime.model))
+        let client = LocalDecisionClient(runtime: runtime, personalURL: personal.url)
         cached = client
+        cachedPersonal = personal
         return client
+    }
+
+    /// The personal correction file chosen for the bundled model, for the settings window.
+    static func personalState() throws -> PersonalStateSelection {
+        _ = try client()
+        return cachedPersonal!
+    }
+
+    private static func selectPersonalState(model: URL) throws -> PersonalStateSelection {
+        let directory = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Application Support/Hannyeong")
+        let selection: PersonalStateSelection
+        do {
+            selection = try PersonalState.select(directory: directory, modelID: PersonalState.modelID(ofModel: model))
+        } catch {
+            logger.error("Personal state selection failed: \(String(describing: error), privacy: .public)")
+            throw error
+        }
+        if let migrated = selection.migratedLegacy {
+            logger.notice("Renamed \(PersonalState.legacyName, privacy: .public) to \(migrated.lastPathComponent, privacy: .public)")
+        }
+        let origin = selection.origin == .existing ? "existing" : "new"
+        let others = selection.otherModelFiles.map(\.lastPathComponent).joined(separator: ",")
+        logger.notice("Personal state for model \(selection.modelID, privacy: .public): \(selection.url.lastPathComponent, privacy: .public) (\(origin, privacy: .public)); kept other-model files not applied: [\(others, privacy: .public)]")
+        return selection
     }
 }
