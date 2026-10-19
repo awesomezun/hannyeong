@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://hannyeong.app/">
   <link rel="icon" href="./assets/icon.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
-  <link rel="stylesheet" href="./styles.css?v=20261020-consent">
+  <link rel="stylesheet" href="./styles.css?v=20261020-support">
   <script type="module" src="./main.js?v=20261019-default-preview"></script>
   <script type="module" src="./analytics.js?v=20261020-consent"></script>
 </head>
@@ -117,14 +117,9 @@
         <article class="input-feature" aria-labelledby="h-alternate-preview">
           <div class="feature-copy"><h3 id="h-alternate-preview">반대 언어 미리보기</h3><p>지금 치는 단어가 반대 언어로는 어떻게 보이는지 <strong>커서 위에서 바로 확인</strong>하세요.</p></div>
           <div class="feature-visual">
-            <figure class="settings-example" aria-label="한글·영어 양방향 미리보기 예시">
-              <figcaption>입력 중 미리보기</figcaption>
-              <div class="preview-setting-row"><span>반대 언어 미리보기</span><span class="preview-switch" role="img" aria-label="켜짐"></span></div>
-              <div class="alternate-examples">
-                <div class="alternate-example"><p>한글로 표시 중</p><div class="alternate-input"><span class="alternate-bubble">hello</span><span class="composing-text">ㅗ디ㅣㅐ</span><span class="example-caret" aria-hidden="true"></span></div></div>
-                <div class="alternate-example"><p>영어로 표시 중</p><div class="alternate-input"><span class="alternate-bubble">안녕</span><span class="composing-text">dkssud</span><span class="example-caret" aria-hidden="true"></span></div></div>
-              </div>
-            </figure>
+            <video class="alternate-preview-video" autoplay muted loop playsinline controls preload="metadata" poster="./assets/alternate-preview-poster.jpg" width="1920" height="1078" aria-label="메모 앱에서 타이핑하며 반대 언어를 커서 위에서 확인하는 한녕 실제 사용 영상">
+              <source src="./assets/alternate-preview.mp4" type="video/mp4">
+            </video>
           </div>
         </article>
       </div>
@@ -142,6 +137,10 @@
         <h3>한영키 정리하기</h3><p>처음 한 번만. 오른쪽 ⌘를 한녕이 쓰도록 비워 둡니다.</p>
         <div class="guide-grid"><figure><img src="./assets/input-source-shortcut-guide.png" loading="lazy" alt="키보드 단축키 설정의 입력 소스 항목. 이전 입력 소스 선택 체크를 끈 모습"><figcaption><h4>입력 소스 전환 끄기</h4><p>시스템 설정 → 키보드 → 키보드 단축키 → 입력 소스에서 체크 해제</p></figcaption></figure><figure><img src="./assets/karabiner-command-guide.png" loading="lazy" alt="Karabiner-Elements 설정에서 right_command를 f19로 바꾸는 항목을 삭제하는 모습"><figcaption><h4>오른쪽 ⌘ 매핑 삭제</h4><p>Karabiner-Elements를 쓴다면 right_command 항목 삭제</p></figcaption></figure></div>
       </details>
+    </section>
+    <section class="support-band" id="support" aria-labelledby="h-support">
+      <div><h2 id="h-support">한녕이 도움이 되었다면</h2><p>한녕을 계속 다듬고 유지할 수 있도록 응원해 주세요.<br>보내주신 후원은 개발과 유지 비용에 보탬이 됩니다.</p><p class="support-note">후원 여부와 관계없이 한녕의 모든 기능을 사용할 수 있습니다.</p></div>
+      <a class="button" href="https://fairy.hada.io/@hannyeong#support" target="_blank" rel="noopener">Fairy에서 후원하기 <span aria-hidden="true">↗</span></a>
     </section>
   </main>
   <footer class="site-footer shell"><div><a class="brand" href="#top"><img src="./assets/icon.png" alt="" width="28" height="28">한녕</a><span class="footer-divider"></span><a href="https://github.com/gityeop/hannyeong">GitHub ↗</a><button class="analytics-settings" type="button" data-analytics-settings>이용 분석 설정</button></div><p>설치나 사용 중 문제가 있으면 <a href="https://github.com/gityeop/hannyeong/issues">GitHub Issues</a>에 알려 주세요.</p></footer>
