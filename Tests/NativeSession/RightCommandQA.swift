@@ -68,9 +68,6 @@ private struct RightCommandQA {
 
     @MainActor private static func composition() async throws {
         let suite = "HannyeongRightCommandQA." + UUID().uuidString
-        let defaults = UserDefaults(suiteName: suite)!
-        defer { defaults.removePersistentDomain(forName: suite) }
-        let shortcuts = ShortcutSettings(defaults: defaults)
         let folder = FileManager.default.temporaryDirectory.appendingPathComponent(suite)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: false)
         defer { try? FileManager.default.removeItem(at: folder) }
@@ -83,7 +80,7 @@ private struct RightCommandQA {
         view.string = "😀 앞말 "
         view.setSelectedRange(NSRange(location: view.string.utf16.count, length: 0))
         let errors = NSMutableArray()
-        let session = CompositionSession(client: view, shortcuts: shortcuts, corrections: store) { errors.add($0) }
+        let session = CompositionSession(client: view, corrections: store) { errors.add($0) }
         func type(_ text: String) {
             for char in text { _ = session.handle(event(.keyDown, 0, text: String(char))) }
         }

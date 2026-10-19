@@ -44,7 +44,6 @@ final class CompositionSession {
     }
 
     private let client: any IMKTextInput
-    private let shortcuts: ShortcutSettings
     private let corrections: CorrectionStore
     private let localClient: LocalDecisionClient?
     private let previewDefaults: UserDefaults
@@ -65,14 +64,13 @@ final class CompositionSession {
     private var lastCommit: Conversion?
     private var feedback: Feedback?
 
-    init(client: any IMKTextInput, shortcuts: ShortcutSettings? = nil, corrections: CorrectionStore? = nil,
+    init(client: any IMKTextInput, corrections: CorrectionStore? = nil,
          localClient: LocalDecisionClient? = nil, previewDefaults: UserDefaults = .standard,
          hostBundleID: String? = nil,
          onPreviewStart: (() -> Void)? = nil,
          onPreview: ((String?) -> Void)? = nil,
          onError: @escaping (String) -> Void) {
         self.client = client
-        self.shortcuts = shortcuts ?? .shared
         self.corrections = corrections ?? CorrectionStore.shared
         self.localClient = localClient
         self.previewDefaults = previewDefaults
@@ -88,8 +86,6 @@ final class CompositionSession {
             commitHangul()
             return false
         }
-        if event.keyCode == shortcuts.code(for: .original) { forceOriginal(); return true }
-        if event.keyCode == shortcuts.code(for: .hangul) { forceHangul(); return true }
         switch event.keyCode {
         case 53: // Escape explicitly chooses the original keys.
             if !raw.isEmpty || !words.isEmpty { commitRaw(); return true }
@@ -202,9 +198,6 @@ final class CompositionSession {
         } catch { report(error) }
     }
 
-    func forceOriginal() { forceCommit(asHangul: false) }
-    func forceHangul() { forceCommit(asHangul: true) }
-
     /// Keep the exact model/correction result when reversing a completed word twice.
     func toggleLanguage() {
         logDiagnostic("toggle_begin")
@@ -268,59 +261,6 @@ final class CompositionSession {
 
     /// Explicit language keys can also change the word immediately before the caret.
     /// Host navigation and session shutdown continue to commit only pending composition.
-    private func forceCommit(asHangul: Bool) {
-        logger.notice("Language shortcut received; Hangul=\(asHangul) pending=\(!self.rawText.isEmpty) recent=\(self.lastCommit != nil)")
-        do {
-            func selected(_ keys: String) throws -> String {
-                asHangul ? try HangulComposer.compose(keys) : keys
-            }
-            let conversion: Conversion
-            if !raw.isEmpty || !words.isEmpty {
-                let range = client.markedRange()
-                guard active, range.location != NSNotFound else {
-                    throw SessionError("The host lost the marked composition before a language shortcut.")
-                }
-                var pending = words
-                if !raw.isEmpty { pending.append(Word(raw: raw, separator: "")) }
-                let last = pending.removeLast()
-                let prefix = try pending.map { try selected($0.raw) + $0.separator }.joined()
-                let before = String((context + prefix).suffix(120))
-                let text = try selected(last.raw)
-                conversion = Conversion(id: last.id, raw: last.raw, selected: text, separator: last.separator,
-                                        before: before,
-                                        range: NSRange(location: range.location + prefix.utf16.count,
-                                                       length: (text + last.separator).utf16.count), source: .languageShortcut)
-                cancelRequest()
-                words.removeAll()
-                raw = ""
-                onPreview?(nil)
-                client.insertText(prefix + conversion.text, replacementRange: range)
-            } else if let previous = lastCommit {
-                try validateFeedback(Feedback(conversionID: previous.id, raw: previous.raw, before: previous.before,
-                                              rejected: previous.selected, separator: previous.separator,
-                                              range: previous.range, expectedText: previous.text, source: previous.source))
-                let text = try selected(previous.raw)
-                conversion = Conversion(id: previous.id, raw: previous.raw, selected: text, separator: previous.separator,
-                                        before: previous.before,
-                                        range: NSRange(location: previous.range.location,
-                                                       length: (text + previous.separator).utf16.count), source: .languageShortcut)
-                cancelRequest()
-                client.insertText(conversion.text, replacementRange: previous.range)
-            } else {
-                return
-            }
-            context = String((conversion.before + conversion.text).suffix(120))
-            contextSelection = client.selectedRange()
-            lastCommit = conversion
-            feedback = nil
-            AppSupport.shared.clearError()
-        } catch {
-            let failure = error as NSError
-            logger.error("Language shortcut failed: \(failure.domain, privacy: .public) code \(failure.code)")
-            onError("방금 입력한 단어를 바꾸지 못했습니다. 입력 위치를 확인해 주세요.")
-        }
-    }
-
     private var rawText: String {
         words.map { $0.raw + $0.separator }.joined() + raw
     }

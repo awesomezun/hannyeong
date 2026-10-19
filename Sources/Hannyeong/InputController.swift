@@ -89,10 +89,6 @@ final class InputController: IMKInputController {
             }
             AppSupport.shared.clearError()
         }
-        if event.keyCode == ShortcutSettings.shared.code(for: .original) ||
-            event.keyCode == ShortcutSettings.shared.code(for: .hangul) {
-            shortcutLogger.notice("IMK language key received; code=\(event.keyCode) modifiers=\(event.modifierFlags.rawValue) session=\(self.session != nil)")
-        }
         guard sender is any IMKTextInput else {
             reportError("활성 입력 클라이언트가 없습니다. 입력란을 다시 선택해 주세요.")
             return true
@@ -108,10 +104,6 @@ final class InputController: IMKInputController {
                 shortcutLogger.notice("IMK right Command modifier; flags=\(event.modifierFlags.rawValue) time=\(event.timestamp)")
             }
             return false
-        }
-        if let scope = ShortcutSettings.shared.correctionScope(for: event) {
-            showFeedback(scope: scope)
-            return true
         }
         if !feedbackCandidates.isEmpty {
             if event.keyCode == 53 {
