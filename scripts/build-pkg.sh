@@ -5,6 +5,7 @@
 #
 #   ./scripts/build-pkg.sh          # unsigned pkg for local testing
 #   ./scripts/build-pkg.sh --sign   # productsign with Developer ID Installer, notarize, staple, verify
+#   HANNYEONG_RELEASE_OUT=<dir with Hannyeong.app> ./scripts/build-pkg.sh --sign   # another release build
 set -euo pipefail
 
 TASK_SIGN=0
@@ -16,7 +17,7 @@ for TASK_ARGUMENT in "$@"; do
 done
 
 TASK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-TASK_OUT="$TASK_ROOT/dist/release"
+TASK_OUT="${HANNYEONG_RELEASE_OUT:-$TASK_ROOT/dist/release}"
 TASK_APP="$TASK_OUT/Hannyeong.app"
 TASK_STAGE="$TASK_ROOT/.build/release-bundle/pkg"
 TASK_INSTALLER_IDENTITY="${HANNYEONG_INSTALLER_IDENTITY:-Developer ID Installer: Sang Yeop Lim (79Q5RV23F9)}"

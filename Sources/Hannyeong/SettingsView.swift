@@ -168,39 +168,7 @@ private struct InformationSettingsView: View {
                 }
                 .padding(.vertical, 8)
             }
-            SettingsCard {
-                PersonalStateSummary()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, 8)
-            }
             Spacer(minLength: 0)
-        }
-    }
-}
-
-@MainActor
-private struct PersonalStateSummary: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("개인 보정").font(.system(size: 16, weight: .semibold))
-            switch Result(catching: { try LocalModelService.personalState() }) {
-            case .success(let state):
-                Text("현재 모델 \(String(state.modelID.prefix(12))) · \(state.url.lastPathComponent)"
-                     + (state.origin == .new ? " (아직 보정 없음)" : ""))
-                    .font(.system(size: 12)).foregroundStyle(.secondary).textSelection(.enabled)
-                Text("저장된 교정은 모델과 관계없이 같은 문맥(또는 항상)에 그대로 적용됩니다. 비슷한 문맥으로 넓혀 주는 개인 보정값은 모델마다 따로 쌓입니다.")
-                    .font(.system(size: 12)).foregroundStyle(.secondary)
-                if !state.otherModelFiles.isEmpty {
-                    Text("다른 모델의 개인 보정 파일 \(state.otherModelFiles.count)개는 지우지 않고 보관하며, 현재 모델에는 적용하지 않습니다.")
-                        .font(.system(size: 12, weight: .medium))
-                        .accessibilityIdentifier("personal-other-models")
-                    Text(state.otherModelFiles.map(\.lastPathComponent).joined(separator: "\n"))
-                        .font(.system(size: 11, design: .monospaced)).foregroundStyle(.secondary).textSelection(.enabled)
-                }
-            case .failure(let error):
-                Text("개인 보정 상태를 확인하지 못했습니다: \(error.localizedDescription)")
-                    .font(.system(size: 12)).foregroundStyle(.red).textSelection(.enabled)
-            }
         }
     }
 }
