@@ -29,7 +29,16 @@ final class CompositionSession {
         var range: NSRange
         var languageAlternative: String? = nil
         var source: SelectionSource = .automaticOrMemory
+        var toggleMemory: ToggleMemory? = nil
         var text: String { selected + separator }
+    }
+
+    /// What right Command remembered for this word, so the next tap in place can undo it exactly.
+    private struct ToggleMemory {
+        /// The word's "always" correction before the first tap, restored by an even number of taps.
+        let priorAlways: CorrectionExample?
+        /// The "always" correction the last tap wrote; nil once the next tap has undone it.
+        let recorded: CorrectionExample?
     }
 
     private struct Feedback {
@@ -59,6 +68,7 @@ final class CompositionSession {
     private var context = ""
     private var contextSelection: NSRange?
     private var task: Task<Void, Never>?
+    private var learning: Task<Void, Never>?
     private var generation = 0
     private var active = true
     private var lastCommit: Conversion?
@@ -213,11 +223,13 @@ final class CompositionSession {
                                           range: previous.range, expectedText: previous.text, source: previous.source))
             let alternate = try previous.languageAlternative ??
                 (previous.selected == previous.raw ? HangulComposer.compose(previous.raw) : previous.raw)
+            let toggleMemory = try remember(previous, alternate: alternate)
             let conversion = Conversion(id: previous.id, raw: previous.raw, selected: alternate, separator: previous.separator,
                                         before: previous.before,
                                         range: NSRange(location: previous.range.location,
                                                        length: (alternate + previous.separator).utf16.count),
-                                        languageAlternative: previous.selected, source: .languageShortcut)
+                                        languageAlternative: previous.selected, source: .languageShortcut,
+                                        toggleMemory: toggleMemory)
             client.insertText(conversion.text, replacementRange: previous.range)
             context = String((conversion.before + conversion.text).suffix(120))
             contextSelection = client.selectedRange()
@@ -231,6 +243,60 @@ final class CompositionSession {
             logger.error("Language toggle failed: \(failure.domain, privacy: .public) code \(failure.code)")
             onError("방금 입력한 단어를 바꾸지 못했습니다. 입력 위치를 확인해 주세요.")
         }
+    }
+
+    /// An odd number of taps in place remembers the result for every context;
+    /// an even number restores the word's earlier memory.
+    private func remember(_ previous: Conversion, alternate: String) throws -> ToggleMemory {
+        let raw = previous.raw
+        let before = previous.before
+        let local = try localClient ?? LocalModelService.client()
+        let candidates = try CandidateBuilder.candidates(for: raw, includeSplits: true)
+        let state = try previous.toggleMemory ??
+            ToggleMemory(priorAlways: corrections.alwaysEntry(raw: raw), recorded: nil)
+        guard let recorded = state.recorded else {
+            try corrections.record(raw: raw, before: before, rejected: previous.selected,
+                                   preferred: alternate, scope: .always)
+            learn {
+                _ = try await local.correct(raw: raw, before: before, candidates: candidates,
+                                            preferred: alternate, scope: .always)
+            }
+            return ToggleMemory(priorAlways: state.priorAlways, recorded: try corrections.alwaysEntry(raw: raw))
+        }
+        if let prior = state.priorAlways {
+            try corrections.record(raw: prior.raw, before: prior.before, rejected: prior.rejected,
+                                   preferred: prior.preferred, scope: .always)
+            learn {
+                _ = try await local.correct(raw: raw, before: prior.before, candidates: candidates,
+                                            preferred: prior.preferred, scope: .always)
+            }
+        } else {
+            try corrections.remove(recorded)
+            learn {
+                _ = try await local.forget(raw: raw, before: before, preferred: recorded.preferred, scope: .always)
+            }
+        }
+        return ToggleMemory(priorAlways: state.priorAlways, recorded: nil)
+    }
+
+    /// Worker updates run in tap order; the text and the saved correction have already changed.
+    private func learn(_ update: @escaping @Sendable () async throws -> Void) {
+        let previous = learning
+        learning = Task { @MainActor [weak self] in
+            await previous?.value
+            do {
+                try await update()
+            } catch {
+                guard let self else { return }
+                self.logFailure(error, stage: "toggle_learning_failed")
+                self.onError("단어는 바꿨지만 개인 학습에 반영하지 못했습니다. 설정의 저장된 교정을 확인해 주세요.")
+            }
+        }
+    }
+
+    /// Waits until every right Command tap so far has reached the personal model.
+    func finishLearning() async {
+        await learning?.value
     }
 
     func completeForCorrection() throws {

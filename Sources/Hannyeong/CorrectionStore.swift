@@ -21,6 +21,10 @@ final class CorrectionStore {
         try save(memory)
     }
 
+    func alwaysEntry(raw: String) throws -> CorrectionExample? {
+        try load().entries.last { $0.raw == raw && $0.scope == .always }
+    }
+
     func remove(_ entry: CorrectionExample) throws {
         try remove([entry])
     }

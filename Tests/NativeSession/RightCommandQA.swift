@@ -10,8 +10,11 @@ private struct RightCommandQA {
             do {
                 try await gestures(flags: .command)
                 try await gestures(flags: NSEvent.ModifierFlags(rawValue: NSEvent.ModifierFlags.command.rawValue | 0x10))
-                try await composition()
-                print("PASS right Command single/double taps, held/chord/context cancellation; pending/completed/mixed/queued words, correction readiness, caret protection and unchanged personal corrections")
+                let runtime = try JSONDecoder().decode(LocalRuntimeConfiguration.self,
+                    from: Data(contentsOf: URL(fileURLWithPath: CommandLine.arguments[1])))
+                try await composition(runtime)
+                try await remembered(runtime)
+                print("PASS right Command single/double taps, held/chord/context cancellation; pending/completed/mixed/queued words, correction readiness, caret protection; odd taps remember, even taps restore")
                 exit(0)
             } catch {
                 fputs("Right Command QA failed: \(error)\n", stderr)
@@ -66,7 +69,7 @@ private struct RightCommandQA {
         try require(actions.isEmpty, "Delayed toggle survived a client/source change")
     }
 
-    @MainActor private static func composition() async throws {
+    @MainActor private static func composition(_ runtime: LocalRuntimeConfiguration) async throws {
         let suite = "HannyeongRightCommandQA." + UUID().uuidString
         let folder = FileManager.default.temporaryDirectory.appendingPathComponent(suite)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: false)
@@ -75,12 +78,13 @@ private struct RightCommandQA {
         for (raw, selected) in [("dkssud", "안녕"), ("hello", "hello"), ("slackdptj", "slack에서")] {
             try store.record(raw: raw, before: "", rejected: raw == selected ? "" : raw, preferred: selected, scope: .always)
         }
-        let personalBefore = try Data(contentsOf: store.url)
+        let seeded = Set(try store.load().entries.map(Pair.init))
+        let local = LocalDecisionClient(runtime: runtime, personalURL: folder.appendingPathComponent("personal.json"))
         let view = NativeTextView(frame: .zero)
         view.string = "😀 앞말 "
         view.setSelectedRange(NSRange(location: view.string.utf16.count, length: 0))
         let errors = NSMutableArray()
-        let session = CompositionSession(client: view, corrections: store) { errors.add($0) }
+        let session = CompositionSession(client: view, corrections: store, localClient: local) { errors.add($0) }
         func type(_ text: String) {
             for char in text { _ = session.handle(event(.keyDown, 0, text: String(char))) }
         }
@@ -105,8 +109,10 @@ private struct RightCommandQA {
         try require(mixed == "😀 앞말 안녕  hello slack에서 ", "Mixed word did not retain its saved correction")
         session.toggleLanguage()
         try require(view.string == "😀 앞말 안녕  hello slackdptj ", "Mixed word did not reverse to original keys")
+        try require(try store.alwaysEntry(raw: "slackdptj")?.preferred == "slackdptj", "Odd tap did not replace the saved mixed word")
         session.toggleLanguage()
         try require(view.string == mixed, "Mixed result was replaced by full Hangul transliteration when restored")
+        try require(try store.alwaysEntry(raw: "slackdptj")?.preferred == "slack에서", "Even taps did not restore the saved mixed word")
         session.suspend(); session.resume(); session.toggleLanguage(); session.toggleLanguage()
         try require(view.string == mixed, "Same-client activation lost the exact mixed result")
         type("hello dkssud")
@@ -128,7 +134,66 @@ private struct RightCommandQA {
         view.setSelectedRange(NSRange(location: 0, length: 0))
         session.toggleLanguage()
         try require(view.string == beforeMove && errors.count == 1, "Moved caret silently changed the old word")
-        try require(try Data(contentsOf: store.url) == personalBefore, "Gestures wrote personal corrections")
+        try require(Set(try store.load().entries.map(Pair.init)) == seeded, "Even taps left saved corrections changed")
+        await session.finishLearning()
+        try require(errors.count == 1, "Personal model update failed: \(errors)")
+    }
+
+    /// A word with no saved correction: odd taps remember it for every context, even taps forget it.
+    @MainActor private static func remembered(_ runtime: LocalRuntimeConfiguration) async throws {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent("HannyeongRightCommandQA." + UUID().uuidString)
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let store = CorrectionStore(url: folder.appendingPathComponent("corrections.json"))
+        let personal = folder.appendingPathComponent("personal.json")
+        let local = LocalDecisionClient(runtime: runtime, personalURL: personal)
+        let view = NativeTextView(frame: .zero)
+        view.string = "앞말 "
+        view.setSelectedRange(NSRange(location: view.string.utf16.count, length: 0))
+        let errors = NSMutableArray()
+        let session = CompositionSession(client: view, corrections: store, localClient: local) { errors.add($0) }
+        func type(_ text: String) {
+            for char in text { _ = session.handle(event(.keyDown, 0, text: String(char))) }
+        }
+        func personalOutputs() throws -> [String] {
+            let state = try JSONSerialization.jsonObject(with: Data(contentsOf: personal)) as! [String: Any]
+            return (state["entries"] as! [[String: Any]])
+                .filter { $0["raw"] as? String == "rkskek" && $0["scope"] as? String == "always" }
+                .map { $0["output"] as! String }
+        }
+        type("rkskek")
+        session.toggleLanguage()
+        try require(view.string == "앞말 rkskek", "Pending Hangul did not reverse to its original keys")
+        try require(try store.alwaysEntry(raw: "rkskek")?.preferred == "rkskek", "Odd tap was not saved")
+        await session.finishLearning()
+        try require(try personalOutputs() == ["rkskek"], "Odd tap did not reach the personal model")
+        session.toggleLanguage()
+        try require(view.string == "앞말 가나다", "Second tap did not restore Hangul")
+        try require(try store.alwaysEntry(raw: "rkskek") == nil, "Even taps left a saved correction")
+        await session.finishLearning()
+        try require(try personalOutputs().isEmpty, "Even taps left a personal model correction")
+        session.toggleLanguage()
+        type(" 1 rkskek ")
+        try await wait(view, errors)
+        try require(view.string == "앞말 rkskek 1 rkskek ", "Remembered word was not typed as chosen: \(view.string)")
+        await session.finishLearning()
+        try require(try personalOutputs() == ["rkskek"], "Third tap did not reach the personal model")
+        // Saved corrections in Settings can still change scope and delete a remembered tap.
+        let entry = try store.alwaysEntry(raw: "rkskek")!
+        let narrowed = try await store.changeScope(of: entry, to: .context, local: local)
+        try require(try personalOutputs().isEmpty && store.alwaysEntry(raw: "rkskek") == nil, "Scope change did not apply")
+        _ = try await local.forget([narrowed])
+        try store.remove(narrowed)
+        try require(try store.load().entries.isEmpty, "Remembered tap could not be deleted")
+        try require(errors.count == 0, "Unexpected error: \(errors)")
+    }
+
+    private struct Pair: Hashable {
+        let raw, before, preferred: String
+        let scope: CorrectionScope
+        init(_ entry: CorrectionExample) {
+            raw = entry.raw; before = entry.before; preferred = entry.preferred; scope = entry.scope
+        }
     }
 
     @MainActor private static func wait(_ view: NativeTextView, _ errors: NSMutableArray) async throws {
