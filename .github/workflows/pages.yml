@@ -6,6 +6,7 @@ on:
     paths:
       - 'website/**'
       - '.github/workflows/pages.yml'
+      - '.github/analytics/**'
   workflow_dispatch:
 
 permissions:
@@ -27,7 +28,10 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
       - name: Check website JavaScript
-        run: node --check website/main.js
+        run: |
+          node --check website/main.js
+          node --check website/analytics.js
+          node .github/analytics/test-consent.mjs
       - uses: actions/upload-pages-artifact@v4
         with:
           path: website

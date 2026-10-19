@@ -8,8 +8,9 @@
   <link rel="canonical" href="https://hannyeong.app/">
   <link rel="icon" href="./assets/icon.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
-  <link rel="stylesheet" href="./styles.css?v=20261019-default-preview">
+  <link rel="stylesheet" href="./styles.css?v=20261020-consent">
   <script type="module" src="./main.js?v=20261019-default-preview"></script>
+  <script type="module" src="./analytics.js?v=20261020-consent"></script>
 </head>
 <body>
   <nav class="site-nav shell" aria-label="사이트 메뉴">
@@ -25,7 +26,7 @@
           <h1 data-hero-row aria-label="한영키 이제는 안녕"><span class="merge-underline" aria-hidden="true"></span><svg class="merge-sparkles" viewBox="0 0 240 140" aria-hidden="true"><g fill="#d8f56b" stroke="#525d29" stroke-width=".7"><path d="M26 18l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M110 5l2 4 4 2-4 2-2 4-2-4-4-2 4-2z"/><path d="M219 35l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M198 110l2 4 4 2-4 2-2 4-2-4-4-2 4-2z"/><path d="M48 112l2 4 4 2-4 2-2 4-2-4-4-2 4-2z"/></g><g fill="#444a31"><circle cx="61" cy="10" r="1.2"/><circle cx="173" cy="22" r="1.4"/><circle cx="232" cy="81" r="1.2"/><circle cx="17" cy="82" r="1.3"/><circle cx="144" cy="129" r="1.2"/></g></svg><span class="title-line"><span aria-hidden="true" data-char>한</span><span aria-hidden="true" data-char>영</span><span aria-hidden="true" data-char>키</span><span aria-hidden="true" data-char> </span></span><span class="title-line" data-title-second><span aria-hidden="true" data-char>이</span><span aria-hidden="true" data-char>제</span><span aria-hidden="true" data-char>는</span><span aria-hidden="true" data-char> </span><span aria-hidden="true" data-char>안</span><span aria-hidden="true" data-char>녕</span></span></h1>
         </div>
         <p class="hero-description">앱 안의 작은 인공지능 모델이 한글인지 영어인지 문맥을 보고 바꿉니다.</p>
-        <div class="hero-actions"><a class="button" href="https://github.com/gityeop/hannyeong/releases/latest/download/Hannyeong-0.3.0-arm64.pkg">다운로드 v0.3.0 <span aria-hidden="true">↓</span></a><a class="source-link" href="https://github.com/gityeop/hannyeong">소스 코드 보기 <span aria-hidden="true">↗</span></a></div>
+        <div class="hero-actions"><a class="button" data-download-location="hero" href="https://github.com/gityeop/hannyeong/releases/latest/download/Hannyeong-0.3.0-arm64.pkg">다운로드 v0.3.0 <span aria-hidden="true">↓</span></a><a class="source-link" href="https://github.com/gityeop/hannyeong">소스 코드 보기 <span aria-hidden="true">↗</span></a></div>
         <p class="requirements">macOS 15 이상 · Apple silicon · Apple 공증 완료</p>
       </div>
       <div class="demo-backdrop">
@@ -135,7 +136,7 @@
     </section>
 
     <section id="install" aria-labelledby="h-install">
-      <div class="install-main"><div><h2 id="h-install">설치는 간단하게.</h2><ol class="install-steps"><li><span>1</span>pkg 열기</li><li><span>2</span>설치</li><li><span>3</span>메뉴바에서 한녕 선택</li></ol><p class="install-note">보이지 않으면 로그아웃 후 다시 로그인하세요.</p></div><div class="install-download"><a class="button" href="https://github.com/gityeop/hannyeong/releases/latest/download/Hannyeong-0.3.0-arm64.pkg">다운로드 v0.3.0 <span aria-hidden="true">↓</span></a><p class="requirements">macOS 15 이상 · Apple silicon</p></div></div>
+      <div class="install-main"><div><h2 id="h-install">설치는 간단하게.</h2><ol class="install-steps"><li><span>1</span>pkg 열기</li><li><span>2</span>설치</li><li><span>3</span>메뉴바에서 한녕 선택</li></ol><p class="install-note">보이지 않으면 로그아웃 후 다시 로그인하세요.</p></div><div class="install-download"><a class="button" data-download-location="install" href="https://github.com/gityeop/hannyeong/releases/latest/download/Hannyeong-0.3.0-arm64.pkg">다운로드 v0.3.0 <span aria-hidden="true">↓</span></a><p class="requirements">macOS 15 이상 · Apple silicon</p></div></div>
       <details class="install-details"><summary>설치 요구 사항과 한영키 설정 안내</summary>
         <dl class="specs"><div><dt>macOS</dt><dd>15 이상 (macOS 27.2에서 확인)</dd></div><div><dt>Mac</dt><dd>Apple silicon (M1 이후)</dd></div><div><dt>자판</dt><dd>두벌식</dd></div><div><dt>용량</dt><dd>약 800MB (판별 모델과 실행 환경 포함)</dd></div></dl>
         <h3>한영키 정리하기</h3><p>처음 한 번만. 오른쪽 ⌘를 한녕이 쓰도록 비워 둡니다.</p>
@@ -143,6 +144,13 @@
       </details>
     </section>
   </main>
-  <footer class="site-footer shell"><div><a class="brand" href="#top"><img src="./assets/icon.png" alt="" width="28" height="28">한녕</a><span class="footer-divider"></span><a href="https://github.com/gityeop/hannyeong">GitHub ↗</a></div><p>설치나 사용 중 문제가 있으면 <a href="https://github.com/gityeop/hannyeong/issues">GitHub Issues</a>에 알려 주세요.</p></footer>
+  <footer class="site-footer shell"><div><a class="brand" href="#top"><img src="./assets/icon.png" alt="" width="28" height="28">한녕</a><span class="footer-divider"></span><a href="https://github.com/gityeop/hannyeong">GitHub ↗</a><button class="analytics-settings" type="button" data-analytics-settings>이용 분석 설정</button></div><p>설치나 사용 중 문제가 있으면 <a href="https://github.com/gityeop/hannyeong/issues">GitHub Issues</a>에 알려 주세요.</p></footer>
+  <aside class="analytics-notice shell" id="website-analytics">
+    <details><summary>웹사이트 이용 분석 안내</summary><p>한녕 앱의 입력 내용과 웹사이트 이용 분석은 별개입니다. 이 웹사이트는 선택적으로 Google Tag Manager를 통해 Google Analytics와 Microsoft Clarity를 사용합니다. 이용 분석에 동의한 경우에만 방문 주소·유입 경로·기기 정보·다운로드 버튼 클릭과 클릭·스크롤·마스킹된 세션 기록을 Google 및 Microsoft에 전송합니다. 이름·연락처나 한녕 앱에서 입력한 내용은 수집하지 않습니다.</p><p>분석 동의 여부는 이 브라우저에 저장하며, ‘이용 분석 설정’에서 언제든 변경할 수 있습니다. 거부하거나 철회하면 분석 도구를 로드하지 않습니다. 철회 시 이 사이트의 분석 쿠키를 삭제하고 페이지를 새로고침합니다. <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Google의 데이터 처리 안내</a> · <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Microsoft 개인정보처리방침</a></p></details>
+  </aside>
+  <section class="analytics-consent" aria-labelledby="analytics-consent-title" data-analytics-consent hidden>
+    <div><h2 id="analytics-consent-title">이용 분석에 동의하시겠어요?</h2><p>방문·다운로드 통계와 클릭·스크롤 분석에 Google Analytics와 Microsoft Clarity를 사용합니다. 동의하지 않아도 다운로드와 모든 기능을 이용할 수 있습니다. <a href="#website-analytics" data-analytics-details>자세히 보기</a></p><p class="analytics-consent-status" data-analytics-status aria-live="polite"></p></div>
+    <div class="analytics-consent-actions"><button type="button" data-analytics-decline>동의 안 함</button><button type="button" data-analytics-accept>이용 분석 동의</button></div>
+  </section>
 </body>
 </html>

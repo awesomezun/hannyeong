@@ -116,6 +116,25 @@ thead > tr > * { border-bottom: 1px solid var(--line) !important; }
 .site-footer .brand { font-size: 15px; gap: 9px; }
 .footer-divider { height: 18px; width: 1px; background: var(--line); }
 .site-footer p { color: var(--muted); }
+.site-footer > div { flex-wrap: wrap; }
+.analytics-settings { padding: 0; border: 0; background: none; color: var(--green); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+button:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+.analytics-notice { padding-bottom: 28px; color: var(--muted); font-size: 12px; }
+.analytics-notice summary { width: fit-content; cursor: pointer; }
+.analytics-notice p { max-width: 78em; margin-top: 10px; }
+.analytics-consent { position: fixed; z-index: 20; inset: auto 24px 24px; display: flex; align-items: center; gap: 28px; max-width: 1100px; margin-inline: auto; padding: 22px 26px; background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 12px 44px #0e101521; }
+.analytics-consent[hidden] { display: none; }
+.analytics-consent h2 { margin-bottom: 6px; font-size: 18px; letter-spacing: -.025em; }
+.analytics-consent p { max-width: 64em; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.analytics-consent-status:empty { display: none; }
+.analytics-consent .analytics-consent-status { margin-top: 6px; color: var(--ink); }
+.analytics-consent-actions { flex-shrink: 0; display: flex; gap: 8px; }
+.analytics-consent-actions button { min-height: 44px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); font: inherit; font-size: 13px; font-weight: 600; line-height: 1.4; cursor: pointer; white-space: nowrap; }
+.analytics-consent-actions button:last-child { border-color: var(--ink); background: var(--ink); color: #fff; }
+@media (max-width: 760px) {
+  .analytics-consent { inset: auto 14px 14px; flex-direction: column; align-items: stretch; gap: 14px; padding: 20px; }
+  .analytics-consent-actions button { flex: 1; }
+}
 @media (min-width: 761px) {
   main { gap: 48px; }
   .hero-scroll::after { height: 80px; }

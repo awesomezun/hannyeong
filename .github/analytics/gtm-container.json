@@ -1,0 +1,395 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-10-19 17:01:43",
+  "containerVersion": {
+    "path": "accounts/6383508398/containers/267627906/versions/0",
+    "accountId": "6383508398",
+    "containerId": "267627906",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6383508398/containers/267627906",
+      "accountId": "6383508398",
+      "containerId": "267627906",
+      "name": "hannyeong.app",
+      "publicId": "GTM-P7SN2D3S",
+      "usageContext": [
+        "WEB"
+      ],
+      "fingerprint": "1792428982749",
+      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6383508398/containers/267627906/workspaces?apiLink=container",
+      "features": {
+        "supportUserPermissions": true,
+        "supportEnvironments": true,
+        "supportWorkspaces": true,
+        "supportGtagConfigs": false,
+        "supportBuiltInVariables": true,
+        "supportClients": false,
+        "supportFolders": true,
+        "supportTags": true,
+        "supportTemplates": true,
+        "supportTriggers": true,
+        "supportVariables": true,
+        "supportVersions": true,
+        "supportZones": true,
+        "supportTransformations": false
+      },
+      "tagIds": [
+        "GTM-P7SN2D3S"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "tagId": "3",
+        "name": "GA4 — download_click",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "link_url"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DLV - download_url}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "button_location"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DLV - button_location}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "link_text"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DLV - link_text}}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "download_click"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-1856DFR43Z"
+          }
+        ],
+        "fingerprint": "1792429252523",
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        },
+        "firingTriggerId": [
+          "7"
+        ]
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "tagId": "4",
+        "name": "Google Analytics G-1856DFR43Z",
+        "type": "dest_ga",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "ignoreDupeGtagConfigCalls",
+            "value": "true"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "destinationId",
+            "value": "G-1856DFR43Z"
+          }
+        ],
+        "fingerprint": "1792429252757",
+        "firingTriggerId": [
+          "2147479573"
+        ],
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        }
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "tagId": "8",
+        "name": "Clarity - analytics consent only",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function(c,l,a,r,i,t,y){\n c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n c[a](\"consentv2\",{analytics_Storage:\"granted\",ad_Storage:\"denied\"});\n t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;\n y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n})(window,document,\"clarity\",\"script\",\"z095is091v\");\n</script>"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "supportDocumentWrite",
+            "value": "false"
+          }
+        ],
+        "firingTriggerId": [
+          "2147479553"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        }
+      }
+    ],
+    "builtInVariable": [
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "type": "PAGE_URL",
+        "name": "Page URL"
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "type": "PAGE_HOSTNAME",
+        "name": "Page Hostname"
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "type": "PAGE_PATH",
+        "name": "Page Path"
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "type": "REFERRER",
+        "name": "Referrer"
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "type": "EVENT",
+        "name": "Event"
+      }
+    ],
+    "fingerprint": "1792429303537",
+    "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6383508398/containers/267627906/versions/0?apiLink=version",
+    "gtagConfig": [
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "gtagConfigId": "5",
+        "type": "ogt_auto_events",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "enableOutboundClick",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableScroll",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableDownload",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableHistoryEvents",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableForm",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableVideo",
+            "value": "false"
+          }
+        ],
+        "fingerprint": "1792429252788"
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "gtagConfigId": "6",
+        "type": "ogt_1p_data_v2",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "isAutoEnabled",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "isManualEnabled",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "autoPhoneEnabled",
+            "value": "false"
+          },
+          {
+            "type": "LIST",
+            "key": "autoCollectExclusionSelectors",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "exclusionSelector"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "isEnabled",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "autoAddressEnabled",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "autoEmailEnabled",
+            "value": "false"
+          }
+        ],
+        "fingerprint": "1792429252795"
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "variableId": "10",
+        "name": "DLV - download_url",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "download_url"
+          }
+        ]
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "variableId": "11",
+        "name": "DLV - button_location",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "button_location"
+          }
+        ]
+      },
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "variableId": "12",
+        "name": "DLV - link_text",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "link_text"
+          }
+        ]
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6383508398",
+        "containerId": "267627906",
+        "triggerId": "7",
+        "name": "Download click",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "download_click"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
