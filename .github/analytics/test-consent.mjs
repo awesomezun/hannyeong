@@ -16,8 +16,8 @@ function page(savedConsent) {
   };
   const downloads = ['hero', 'install'].map(location => ({
     ...node(location), dataset: { downloadLocation: location },
-    href: 'https://github.com/gityeop/hannyeong/releases/latest/download/Hannyeong-0.3.0-arm64.pkg',
-    textContent: '다운로드 v0.3.0 ↓'
+    href: 'https://github.com/gityeop/hannyeong/releases/download/v0.4.0/Hannyeong-0.4.0-arm64.pkg',
+    textContent: '다운로드 v0.4.0 ↓'
   }));
   const storage = new Map(savedConsent ? [[key, savedConsent]] : []);
   const scripts = [], expiredCookies = [], clarityCalls = [];
