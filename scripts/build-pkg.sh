@@ -105,7 +105,7 @@ cat > "$TASK_STAGE/resources/welcome.html" <<'HTML'
 <html><body style="font-family:-apple-system;font-size:13px">
 <h2>한녕 설치</h2>
 <p>한녕(Hannyeong)을 이 사용자 계정의 <code>~/Library/Input Methods</code>에 설치하고 입력 소스로 등록합니다. 관리자 암호는 필요하지 않습니다.</p>
-<p>모든 한·영 판별은 이 Mac 안에서만 이루어지며 네트워크 요청을 보내지 않습니다. 기존 F8 교정 기록(<code>~/Library/Application Support/Hannyeong</code>)은 그대로 유지되고 적용됩니다. 비슷한 문맥으로 넓혀 주는 개인 보정값은 판별 모델마다 따로 저장되어, 업데이트로 모델이 바뀌면 새 모델에서 다시 쌓입니다. 이전 모델의 보정 파일은 지우지 않고 보관하며 새 모델에는 적용하지 않습니다(설정 → 정보에서 확인).</p>
+<p>모든 한·영 판별은 이 Mac 안에서만 이루어지며 네트워크 요청을 보내지 않습니다. 기존 교정 기록(<code>~/Library/Application Support/Hannyeong</code>)은 그대로 유지되고 적용됩니다. 비슷한 문맥으로 넓혀 주는 개인 보정값은 판별 모델마다 따로 저장되어, 업데이트로 모델이 바뀌면 새 모델에서 다시 쌓입니다. 이전 모델의 보정 파일은 지우지 않고 보관하며 새 모델에는 적용하지 않습니다.</p>
 <p>요구 사항: Apple Silicon Mac, macOS 15.0 이상 (macOS 27.2에서 검증).</p>
 </body></html>
 HTML
