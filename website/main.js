@@ -287,6 +287,16 @@ class Keycap {
 
 }
 
+const introVideo = document.querySelector('[data-scroll-play]');
+const introVideoObserver = new IntersectionObserver(([entry]) => {
+  if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+    introVideo.play().catch(error => console.error('소개 영상 자동 재생 실패:', error));
+  } else {
+    introVideo.pause();
+  }
+}, { threshold: [0, 0.25] });
+introVideoObserver.observe(introVideo);
+
 const demos = [
   new HeroTitle(document.querySelector('#hn-hero-pin')),
   new TypingDemo(document.querySelector('[data-typing]')),
